@@ -22,6 +22,13 @@
             --text-color: #2c3e50;
             --border-color: #cfd8dc;
             --bg-input: #f8f9fa;
+            
+            /* Nuevas variables de color para Transferencia (Escala de Rojos) */
+            --transfer-bg: #ffebee;
+            --transfer-border: #ef9a9a;
+            --transfer-text: #b71c1c;
+            --transfer-btn: #c62828;
+            --transfer-btn-hover: #b71c1c;
         }
         
         *, *::before, *::after { box-sizing: border-box; }
@@ -263,14 +270,16 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
+        /* Botones adaptados con tonos institucionales */
         .bg-mp-btn { background-color: #009ee3; }
         .bg-mp-btn:hover { background-color: #0081ba; }
-        .bg-bank-btn { background-color: #25D366; }
-        .bg-bank-btn:hover { background-color: #128C7E; }
+        .bg-bank-btn { background-color: var(--transfer-btn); }
+        .bg-bank-btn:hover { background-color: var(--transfer-btn-hover); }
 
+        /* Cuadro de Datos Bancarios en Escala de Rojos */
         .bank-details-box {
-            background: #f1f8e9;
-            border: 1px dashed #7cb342;
+            background: var(--transfer-bg);
+            border: 1px dashed var(--transfer-border);
             padding: 15px;
             border-radius: 6px;
             text-align: left;
@@ -279,39 +288,58 @@
         }
         
         .bank-line { 
-            margin-bottom: 8px; 
+            margin-bottom: 10px; 
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
+        .bank-line:last-child { margin-bottom: 0; }
         
-        .bank-line strong { color: var(--primary-color); }
+        .bank-line strong { color: var(--text-color); }
+        
+        /* Contenedor del Monto Destacado */
+        .amount-highlight {
+            background-color: #ffffff;
+            border: 2px solid var(--transfer-border);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .amount-value {
+            font-size: 20pt;
+            font-weight: 900;
+            color: var(--transfer-text);
+            font-family: 'Arial Black', sans-serif;
+        }
         
         .copy-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: #ffffff;
-            border: 1px solid #c5e1a5;
+            border: 1px solid var(--transfer-border);
             padding: 6px 10px;
             border-radius: 4px;
             font-family: monospace;
             font-size: 11pt;
+            color: #000000;
         }
         
         .copy-btn {
-            background-color: #e8f5e9;
-            border: 1px solid #a5d6a7;
-            color: #2e7d32;
+            background-color: var(--transfer-bg);
+            border: 1px solid var(--transfer-border);
+            color: var(--transfer-text);
             padding: 4px 8px;
             font-size: 8.5pt;
             font-weight: bold;
             border-radius: 4px;
             cursor: pointer;
             font-family: sans-serif;
+            transition: all 0.2s;
         }
-        
-        .copy-btn.copied { background-color: #2e7d32; color: white; }
+        .copy-btn:hover { background-color: #ffcdd2; }
+        .copy-btn.copied { background-color: var(--transfer-text); color: white; border-color: var(--transfer-text); }
 
         .secure-footer {
             margin-top: 15px;
@@ -437,9 +465,15 @@
                         <div class="secure-footer">🛡️ Tarjeta de crédito, débito o dinero en cuenta. Redirección inmediata tras validar.</div>
                     </div>
 
-                    <!-- Bloque Transferencia con datos -->
+                    <!-- Bloque Transferencia con datos (Escala de Rojos + Monto) -->
                     <div id="panel-bank" class="payment-block-content">
                         <div class="bank-details-box">
+                            <!-- NUEVA INDICACIÓN CLARA Y VISIBLE DEL MONTO -->
+                            <div class="amount-highlight">
+                                <div class="label" style="text-align: center; margin-bottom: 2px;">Monto total a transferir</div>
+                                <div class="amount-value">$50.000 ARS</div>
+                            </div>
+                            
                             <div class="bank-line"><span><strong>Plataforma:</strong> Mercado Pago</span></div>
                             <div class="bank-line"><span><strong>Titular:</strong> Jose Contreras</span></div>
                             <div class="bank-line">
@@ -460,7 +494,7 @@
                         <button type="button" class="btn-submit-flow bg-bank-btn" onclick="processFlow()">
                             Confirmar Ficha y Adjuntar Comprobante
                         </button>
-                        <div class="secure-footer">⚠️ Se enviará su historia clínica y abrirá el chat para adjuntar la foto del pago.</div>
+                        <div class="secure-footer" style="color:#c62828;">⚠️ Transfiera el monto exacto de $50.000 y adjunte el comprobante en la ventana siguiente.</div>
                     </div>
 
                 </div>
@@ -481,7 +515,7 @@
         // REEMPLAZAR AQUÍ TU LINK DE MERCADO PAGO
         const MP_LINK = "TU_LINK_DE_MERCADO_PAGO_AQUI"; 
         
-        const WA_LINK_BANK = "https://wa.me/5491122558962?text=%C2%A1Hola%21%20Acabo%20de%20completar%20mi%20historia%20cl%C3%ADnica%20y%20realizar%20la%20transferencia%20bancaria%20para%20la%20urgencia.%20Adjunto%20aqu%C3%AD%20el%20comprobante.";
+        const WA_LINK_BANK = "https://wa.me/5491122558962?text=%C2%A1Hola%21%20Acabo%20de%20completar%20mi%20historia%20cl%C3%ADnica%20y%20realizar%20la%20transferencia%20bancaria%20de%20%2450.000%20para%20la%20urgencia.%20Adjunto%20aqu%C3%AD%20el%20comprobante.";
 
         let selectedMethod = 'mp';
 
@@ -538,7 +572,7 @@
                 document.getElementById('fallbackLink').innerText = "Abrir WhatsApp de Comprobantes";
             }
 
-            alert("Procesando admisión clínica... Al finalizar la carga serás redirigido para el pago.");
+            alert("Procesando admisión clínica... Al finalizar la carga serás redirigido para continuar.");
 
             const formData = new FormData(form);
             const params = new URLSearchParams(formData).toString();
