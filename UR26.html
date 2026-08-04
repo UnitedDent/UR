@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urgencia Médica - United Dental</title>
+    <title>Admision Atencion Exclusiva - United Dental</title>
     
-    <!-- Configuración definitiva de Favicon (.png) -->
+    <!-- Configuración de Favicon (.png) -->
     <link rel="apple-touch-icon" sizes="180x180" href="logo.png?v=99">
     <link rel="icon" type="image/png" sizes="32x32" href="logo.png?v=99">
     <link rel="icon" type="image/png" sizes="16x16" href="logo.png?v=99">
@@ -22,13 +22,6 @@
             --text-color: #2c3e50;
             --border-color: #cfd8dc;
             --bg-input: #f8f9fa;
-            
-            /* Nuevas variables de color para Transferencia (Escala de Rojos) */
-            --transfer-bg: #ffebee;
-            --transfer-border: #ef9a9a;
-            --transfer-text: #b71c1c;
-            --transfer-btn: #c62828;
-            --transfer-btn-hover: #b71c1c;
         }
         
         *, *::before, *::after { box-sizing: border-box; }
@@ -270,16 +263,14 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
-        /* Botones adaptados con tonos institucionales */
         .bg-mp-btn { background-color: #009ee3; }
         .bg-mp-btn:hover { background-color: #0081ba; }
-        .bg-bank-btn { background-color: var(--transfer-btn); }
-        .bg-bank-btn:hover { background-color: var(--transfer-btn-hover); }
+        .bg-bank-btn { background-color: #25D366; }
+        .bg-bank-btn:hover { background-color: #128C7E; }
 
-        /* Cuadro de Datos Bancarios en Escala de Rojos */
         .bank-details-box {
-            background: var(--transfer-bg);
-            border: 1px dashed var(--transfer-border);
+            background: #f1f8e9;
+            border: 1px dashed #7cb342;
             padding: 15px;
             border-radius: 6px;
             text-align: left;
@@ -288,58 +279,39 @@
         }
         
         .bank-line { 
-            margin-bottom: 10px; 
+            margin-bottom: 8px; 
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
-        .bank-line:last-child { margin-bottom: 0; }
         
-        .bank-line strong { color: var(--text-color); }
-        
-        /* Contenedor del Monto Destacado */
-        .amount-highlight {
-            background-color: #ffffff;
-            border: 2px solid var(--transfer-border);
-            border-radius: 6px;
-            padding: 12px;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        .amount-value {
-            font-size: 20pt;
-            font-weight: 900;
-            color: var(--transfer-text);
-            font-family: 'Arial Black', sans-serif;
-        }
+        .bank-line strong { color: var(--primary-color); }
         
         .copy-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: #ffffff;
-            border: 1px solid var(--transfer-border);
+            border: 1px solid #c5e1a5;
             padding: 6px 10px;
             border-radius: 4px;
             font-family: monospace;
             font-size: 11pt;
-            color: #000000;
         }
         
         .copy-btn {
-            background-color: var(--transfer-bg);
-            border: 1px solid var(--transfer-border);
-            color: var(--transfer-text);
+            background-color: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            color: #2e7d32;
             padding: 4px 8px;
             font-size: 8.5pt;
             font-weight: bold;
             border-radius: 4px;
             cursor: pointer;
             font-family: sans-serif;
-            transition: all 0.2s;
         }
-        .copy-btn:hover { background-color: #ffcdd2; }
-        .copy-btn.copied { background-color: var(--transfer-text); color: white; border-color: var(--transfer-text); }
+        
+        .copy-btn.copied { background-color: #2e7d32; color: white; }
 
         .secure-footer {
             margin-top: 15px;
@@ -377,6 +349,10 @@
     <div class="page">
         <div id="formContainer">
             <form id="hcForm">
+                <!-- Campos ocultos compatibles con las 18 columnas del script -->
+                <input type="hidden" name="provincia" value="Buenos Aires">
+                <input type="hidden" name="cp" value="7167">
+
                 <div class="patient-block">
                     <!-- Cabecera -->
                     <div class="header-dso">
@@ -387,7 +363,7 @@
                         </div>
                     </div>
                     
-                    <div class="title-banner">Historia Clínica de Admisión</div>
+                    <div class="title-banner">Admision Atencion Exclusiva</div>
                     
                     <!-- Formulario Clínico -->
                     <div class="form-grid">
@@ -414,8 +390,8 @@
                         </div>
                         <div class="form-cell c-4"><span class="label">Ocupación</span><input type="text" name="ocupacion" class="fill-input"></div>
                         
-                        <div class="form-cell c-10"><span class="label">Domicilio</span><input type="text" name="domicilio" class="fill-input"></div>
-                        <div class="form-cell c-4"><span class="label">Localidad</span><input type="text" name="localidad" class="fill-input"></div>
+                        <div class="form-cell c-10"><span class="label">Domicilio</span><input type="text" name="domicilio" class="fill-input" required></div>
+                        <div class="form-cell c-4"><span class="label">Localidad</span><input type="text" name="localidad" class="fill-input" required></div>
                         <div class="form-cell c-6">
                             <span class="label">Teléfono</span>
                             <input type="tel" id="phone" class="fill-input" required>
@@ -425,8 +401,8 @@
                         <div class="form-cell c-20"><span class="label">E-mail</span><input type="email" name="email" class="fill-input" required></div>
                         
                         <div class="form-cell c-20" style="min-height: 85px;">
-                            <span class="label">Principal Motivo de la Consulta / Sintomatología de Urgencia</span>
-                            <textarea name="motivo_consulta" class="fill-textarea" placeholder="Describa el dolor o motivo de urgencia..." required></textarea>
+                            <span class="label">Principal Motivo de la Consulta / Sintomatología</span>
+                            <textarea name="motivo_consulta" class="fill-textarea" placeholder="Describa el dolor o motivo de consulta..." required></textarea>
                         </div>
                     </div>
                     
@@ -447,9 +423,9 @@
 
                     <!-- SECCIÓN DE PAGOS INTEGRADA -->
                     <div class="section-separator"></div>
-                    <div class="payment-title">Reserva y Arancel de Guardia</div>
+                    <div class="payment-title">Reserva y Arancel de Atención Exclusiva</div>
                     <div style="text-align: justify; font-size: 10pt; margin-bottom: 10px; color: #546e7a;">
-                        Para garantizar y bloquear su bloque horario de urgencia en la agenda de la guardia, seleccione su medio de pago preferido abajo y proceda con el envío.
+                        Para garantizar y bloquear su bloque horario en la agenda, seleccione su medio de pago preferido abajo y proceda con el envío.
                     </div>
 
                     <div class="method-selector">
@@ -465,15 +441,9 @@
                         <div class="secure-footer">🛡️ Tarjeta de crédito, débito o dinero en cuenta. Redirección inmediata tras validar.</div>
                     </div>
 
-                    <!-- Bloque Transferencia con datos (Escala de Rojos + Monto) -->
+                    <!-- Bloque Transferencia con datos -->
                     <div id="panel-bank" class="payment-block-content">
                         <div class="bank-details-box">
-                            <!-- NUEVA INDICACIÓN CLARA Y VISIBLE DEL MONTO -->
-                            <div class="amount-highlight">
-                                <div class="label" style="text-align: center; margin-bottom: 2px;">Monto total a transferir</div>
-                                <div class="amount-value">$50.000 ARS</div>
-                            </div>
-                            
                             <div class="bank-line"><span><strong>Plataforma:</strong> Mercado Pago</span></div>
                             <div class="bank-line"><span><strong>Titular:</strong> Jose Contreras</span></div>
                             <div class="bank-line">
@@ -494,7 +464,7 @@
                         <button type="button" class="btn-submit-flow bg-bank-btn" onclick="processFlow()">
                             Confirmar Ficha y Adjuntar Comprobante
                         </button>
-                        <div class="secure-footer" style="color:#c62828;">⚠️ Transfiera el monto exacto de $50.000 y adjunte el comprobante en la ventana siguiente.</div>
+                        <div class="secure-footer">⚠️ Se enviará su historia clínica y abrirá el chat para adjuntar la foto del pago.</div>
                     </div>
 
                 </div>
@@ -504,18 +474,18 @@
         <!-- Pantalla de contingencia -->
         <div id="successScreen" class="success-overlay">
             <h2 style="color: #2e7d32;">¡Sincronización Completada!</h2>
-            <p>Haga clic abajo si su acción no se ejecutó de forma automática:</p>
-            <a id="fallbackLink" href="#" class="btn-submit-flow bg-mp-btn" style="text-decoration: none;">Continuar</a>
+            <p>Si la pasarela de pago no se abrió automáticamente, haga clic en el siguiente botón:</p>
+            <a id="fallbackLink" href="#" target="_blank" class="btn-submit-flow bg-mp-btn" style="text-decoration: none;">Continuar al Pago</a>
         </div>
     </div>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzVFz1xrD_nW8FlxJD9HfGbLpK2ZUmF6U7ndGvsdKU-T2rKmtI9Iuu8LEDXQMnS8sSX/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbPZmfRbGmOmbIxqK5ujJHBvT2VhKRwwyie3Ax_O-iP5IFxh9k67qWHzoCOTUVY5sgz/exec";
         
-        // REEMPLAZAR AQUÍ TU LINK DE MERCADO PAGO
-        const MP_LINK = "TU_LINK_DE_MERCADO_PAGO_AQUI"; 
+        // LINK DE MERCADO PAGO DEFINITIVO
+        const MP_LINK = "https://mpago.la/2vP93pL"; 
         
-        const WA_LINK_BANK = "https://wa.me/5491122558962?text=%C2%A1Hola%21%20Acabo%20de%20completar%20mi%20historia%20cl%C3%ADnica%20y%20realizar%20la%20transferencia%20bancaria%20de%20%2450.000%20para%20la%20urgencia.%20Adjunto%20aqu%C3%AD%20el%20comprobante.";
+        const WA_LINK_BANK = "https://wa.me/5491122558962?text=%C2%A1Hola%21%20Acabo%20de%20completar%20mi%20historia%20cl%C3%ADnica%20de%20Admisi%C3%B3n%20Atenci%C3%B3n%20Exclusiva%20y%20realizar%20la%20transferencia%20bancaria.%20Adjunto%20aqu%C3%AD%20el%20comprobante.";
 
         let selectedMethod = 'mp';
 
@@ -563,6 +533,8 @@
             if(!form.checkValidity()) { alert("Complete todos los campos de la historia clínica y firme el documento."); form.reportValidity(); return; }
 
             const targetUrl = (selectedMethod === 'mp') ? MP_LINK : WA_LINK_BANK;
+            
+            // Configurar enlace de respaldo
             document.getElementById('fallbackLink').href = targetUrl;
             if(selectedMethod === 'mp') {
                 document.getElementById('fallbackLink').className = "btn-submit-flow bg-mp-btn";
@@ -572,18 +544,34 @@
                 document.getElementById('fallbackLink').innerText = "Abrir WhatsApp de Comprobantes";
             }
 
-            alert("Procesando admisión clínica... Al finalizar la carga serás redirigido para continuar.");
+            // 1. Abrimos la pasarela INMEDIATAMENTE en el clic para evitar bloqueo Pop-Up
+            const paymentWindow = window.open(targetUrl, '_blank');
 
+            // 2. Enviamos la información en segundo plano a Google Apps Script
             const formData = new FormData(form);
             const params = new URLSearchParams(formData).toString();
 
-            fetch(`${WEB_APP_URL}?${params}`, { method: 'POST' })
-            .then(() => { window.location.href = targetUrl; })
-            .catch(() => {
-                window.location.href = targetUrl;
-                document.getElementById('formContainer').style.display = 'none';
-                document.getElementById('successScreen').style.display = 'block';
+            fetch(`${WEB_APP_URL}?${params}`, { 
+                method: 'POST',
+                mode: 'no-cors'
+            })
+            .then(() => {
+                showSuccess();
+            })
+            .catch((err) => {
+                console.error("Error al registrar datos:", err);
+                showSuccess();
             });
+
+            // Si el navegador bloqueó la nueva pestaña, forzamos la redirección directa en la pestaña actual
+            if (!paymentWindow || paymentWindow.closed || typeof paymentWindow.closed == 'undefined') {
+                window.location.href = targetUrl;
+            }
+        }
+
+        function showSuccess() {
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('successScreen').style.display = 'block';
         }
     </script>
 </body>
