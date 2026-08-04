@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="logo.png?v=99">
     <link rel="shortcut icon" type="image/png" href="logo.png?v=99">
     
-    <!-- Selector internacional de países para teléfono -->
+    <!-- Librería internacional para selector de países en teléfono -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     
@@ -106,7 +106,7 @@
             margin-bottom: 15px;
         }
         
-        /* Grid de Formulario */
+        /* Grid de Formulario Móvil por Defecto */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -320,9 +320,42 @@
             text-align: center;
         }
         
-        .success-overlay { display: none; text-align: center; padding: 40px 20px; }
+        /* Contenedor de Éxito Post-Envío */
+        .success-overlay {
+            display: none;
+            text-align: center;
+            padding: 30px 15px;
+        }
+        .success-title {
+            color: var(--accent-color);
+            font-size: 22pt;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .success-text {
+            font-size: 12pt;
+            margin-bottom: 25px;
+            color: var(--text-color);
+        }
+        
+        /* Imagen Informativa UDInfo.png */
+        .info-image-container {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .info-image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+        }
+
         .iti { width: 100%; }
 
+        /* Media Query para Escritorios y Laptops */
         @media (min-width: 768px) {
             body { padding: 20px; }
             .page { padding: 25px; }
@@ -330,29 +363,64 @@
             .header-dso { flex-direction: row; justify-content: space-between; align-items: center; }
             .clinic-title-large { text-align: left; }
             .clinic-info { text-align: right; }
+            
             .form-grid { grid-template-columns: repeat(20, 1fr); }
-            .c-8  { grid-column: span 8; }
+            .c-3  { grid-column: span 3; }
             .c-4  { grid-column: span 4; }
             .c-5  { grid-column: span 5; }
-            .c-3  { grid-column: span 3; }
             .c-6  { grid-column: span 6; }
+            .c-8  { grid-column: span 8; }
             .c-10 { grid-column: span 10; }
+            .c-12 { grid-column: span 12; }
             .c-20 { grid-column: span 20; }
+            
             .signature-input-group { flex-direction: row; align-items: center; }
             .bank-line { flex-direction: row; align-items: center; justify-content: space-between; }
             .copy-row { width: 65%; }
+        }
+
+        /* ESTILOS DE IMPRESIÓN EXCLUSIVOS: BLINDAJE EN HOJA A4 ÚNICA */
+        @media print {
+            @page { size: A4; margin: 10mm 15mm; }
+            body { background-color: #ffffff; padding: 0; margin: 0; font-size: 10pt; }
+            .section-separator, .payment-title, .method-selector, .payment-block-content { display: none !important; }
+            .page { max-width: 100%; width: 100%; box-shadow: none; padding: 0; margin: 0; background: white; }
+            
+            .form-grid { 
+                display: grid !important; 
+                grid-template-columns: repeat(20, 1fr) !important; 
+                gap: 1px; 
+                background-color: var(--border-color); 
+            }
+            .c-3  { grid-column: span 3 !important; } 
+            .c-4  { grid-column: span 4 !important; } 
+            .c-5  { grid-column: span 5 !important; }
+            .c-6  { grid-column: span 6 !important; } 
+            .c-8  { grid-column: span 8 !important; } 
+            .c-10 { grid-column: span 10 !important; } 
+            .c-12 { grid-column: span 12 !important; }
+            .c-20 { grid-column: span 20 !important; }
+            
+            .form-cell { background-color: transparent !important; min-height: 50px; padding: 6px 10px; }
+            .fill-input { color: #000000 !important; }
+            .fill-textarea { height: 40px; }
+            .dso-signature-box { background: transparent; border: 1px solid var(--border-color); }
+            
+            .header-dso { display: flex !important; flex-direction: row !important; justify-content: space-between !important; }
+            .clinic-title-large { text-align: left !important; }
+            .clinic-info { text-align: right !important; }
+            .signature-input-group { display: flex !important; flex-direction: row !important; }
+            
+            input[type="date"]::-webkit-calendar-picker-indicator { display: none; -webkit-appearance: none; }
         }
     </style>
 </head>
 <body>
 
     <div class="page">
+        <!-- Bloque Principal de Formulario -->
         <div id="formContainer">
             <form id="hcForm">
-                <!-- Campos ocultos compatibles con las 18 columnas del script -->
-                <input type="hidden" name="provincia" value="Buenos Aires">
-                <input type="hidden" name="cp" value="7167">
-
                 <div class="patient-block">
                     <!-- Cabecera -->
                     <div class="header-dso">
@@ -365,7 +433,7 @@
                     
                     <div class="title-banner">Admision Atencion Exclusiva</div>
                     
-                    <!-- Formulario Clínico -->
+                    <!-- Formulario Clínico con todos los campos visibles -->
                     <div class="form-grid">
                         <div class="form-cell c-8"><span class="label">Apellidos</span><input type="text" name="apellidos" class="fill-input" required></div>
                         <div class="form-cell c-8"><span class="label">Nombres</span><input type="text" name="nombres" class="fill-input" required></div>
@@ -385,20 +453,22 @@
                             <span class="label">Nacionalidad</span>
                             <input type="text" name="nacionalidad" class="fill-input" list="paises" placeholder="Escriba país..." autocomplete="off" required>
                             <datalist id="paises">
-                                <option value="Argentina"><option value="Uruguay"><option value="Chile"><option value="Brasil"><option value="Paraguay"><option value="Bolivia"><option value="Perú"><option value="Colombia"><option value="Venezuela"><option value="Ecuador"><option value="Estados Unidos"><option value="España"><option value="México"><option value="Italia">
+                                <option value="Argentina"><option value="Uruguay"><option value="Chile"><option value="Brasil"><option value="Paraguay"><option value="Bolivia"><option value="Perú"><option value="Colombia"><option value="Venezuela"><option value="Ecuador"><option value="Estados Unidos"><option value="España"><option value="México"><option value="Italia"><option value="Francia"><option value="Alemania"><option value="Reino Unido"><option value="Canadá"><option value="Portugal"><option value="Suiza"><option value="China"><option value="Japón"><option value="Australia"><option value="Costa Rica"><option value="Cuba"><option value="Guatemala"><option value="Honduras"><option value="Nicaragua"><option value="Panamá"><option value="Puerto Rico"><option value="República Dominicana"><option value="El Salvador">
                             </datalist>
                         </div>
                         <div class="form-cell c-4"><span class="label">Ocupación</span><input type="text" name="ocupacion" class="fill-input"></div>
                         
-                        <div class="form-cell c-10"><span class="label">Domicilio</span><input type="text" name="domicilio" class="fill-input" required></div>
-                        <div class="form-cell c-4"><span class="label">Localidad</span><input type="text" name="localidad" class="fill-input" required></div>
-                        <div class="form-cell c-6">
+                        <div class="form-cell c-8"><span class="label">Domicilio (Calle, Nro, Piso, Depto)</span><input type="text" name="domicilio" class="fill-input" required></div>
+                        <div class="form-cell c-5"><span class="label">Localidad</span><input type="text" name="localidad" class="fill-input" required></div>
+                        <div class="form-cell c-4"><span class="label">Provincia</span><input type="text" name="provincia" class="fill-input" value="Buenos Aires" required></div>
+                        <div class="form-cell c-3"><span class="label">Código Postal</span><input type="text" name="cp" class="fill-input" placeholder="Ej: B7167"></div>
+                        
+                        <div class="form-cell c-8">
                             <span class="label">Teléfono</span>
                             <input type="tel" id="phone" class="fill-input" required>
                             <input type="hidden" name="telefono" id="hidden_phone">
                         </div>
-                        
-                        <div class="form-cell c-20"><span class="label">E-mail</span><input type="email" name="email" class="fill-input" required></div>
+                        <div class="form-cell c-12"><span class="label">E-mail (Correo Electrónico)</span><input type="email" name="email" class="fill-input" required></div>
                         
                         <div class="form-cell c-20" style="min-height: 85px;">
                             <span class="label">Principal Motivo de la Consulta / Sintomatología</span>
@@ -407,16 +477,16 @@
                     </div>
                     
                     <div class="consent-mini">
-                        <strong>Consentimiento Informado y Acuerdo Financiero:</strong> Consiento los tratamientos e imágenes en United Dental (Ley 26.529) y ratifico que la atención es exclusivamente particular. Acepto que cualquier bonificación o gratuidad sobre la consulta o los estudios de diagnóstico por imágenes es de carácter promocional y condicionada a realizar mi tratamiento en este centro. En caso de solicitar el retiro, copia o envío de cualquier archivo digitalizado para uso externo o interconsulta, me comprometo a abonar el valor técnico de lista vigente de dicho estudio.
+                        <strong>Consentimiento Informado y Acuerdo Financiero:</strong> Consiento los tratamientos e imágenes en <strong>United Dental</strong> (Ley 26.529) y ratifico que la atención es exclusivamente particular. Acepto que cualquier bonificación o gratuidad sobre la consulta o los estudios de diagnóstico por imágenes es de carácter promocional y condicionada a realizar mi tratamiento en este centro. En caso de solicitar el retiro, copia o envío de cualquier archivo digitalizado para uso externo o interconsulta, me comprometo a abonar el valor técnico de lista vigente de dicho estudio.
                     </div>
                     
                     <div class="dso-signature-box">
                         <label class="checkbox-container">
                             <input type="checkbox" id="legal_agree" name="firma_digital_check" value="ACEPTO" required>
-                            <span>Acepto los términos del consentimiento informado y firmo digitalmente este documento.</span>
+                            <span>Acepto los términos del consentimiento informado y firmo digitalmente este documento con carácter de Declaración Jurada.</span>
                         </label>
                         <div class="signature-input-group">
-                            <span class="label" style="margin: 0;">Firma Electrónica (Nombre y Apellido completos):</span>
+                            <span class="label" style="margin: 0; white-space: nowrap;">Firma Electrónica (Escriba Nombre y Apellido completos):</span>
                             <input type="text" name="firma_digital_nombre" class="fill-input" style="border-bottom: 1px solid #78909c; background: transparent; max-width: 350px;" placeholder="Nombre del firmante" required>
                         </div>
                     </div>
@@ -433,7 +503,7 @@
                         <button type="button" id="btn-choice-bank" class="method-btn" onclick="setPaymentMethod('bank')">🏦 Transferencia Directa</button>
                     </div>
 
-                    <!-- Bloque Mercado Pago informativo -->
+                    <!-- Bloque Mercado Pago -->
                     <div id="panel-mp" class="payment-block-content active">
                         <button type="button" class="btn-submit-flow bg-mp-btn" onclick="processFlow()">
                             Confirmar Ficha y Pagar con Mercado Pago
@@ -471,20 +541,21 @@
             </form>
         </div>
 
-        <!-- Pantalla de contingencia -->
+        <!-- Pantalla de éxito post-envío -->
         <div id="successScreen" class="success-overlay">
-            <h2 style="color: #2e7d32;">¡Sincronización Completada!</h2>
-            <p>Si la pasarela de pago no se abrió automáticamente, haga clic en el siguiente botón:</p>
-            <a id="fallbackLink" href="#" target="_blank" class="btn-submit-flow bg-mp-btn" style="text-decoration: none;">Continuar al Pago</a>
+            <div class="success-title">¡Admisión Recibida!</div>
+            <p class="success-text">La firma de la declaración jurada e historial clínico se han procesado de manera conforme.</p>
+            <a id="fallbackLink" href="#" target="_blank" class="btn-submit-flow bg-mp-btn" style="text-decoration: none; max-width: 350px; margin: 0 auto 20px auto;">Continuar</a>
+            
+            <div class="info-image-container">
+                <img src="UDInfo.png" alt="Información UDental">
+            </div>
         </div>
     </div>
 
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbPZmfRbGmOmbIxqK5ujJHBvT2VhKRwwyie3Ax_O-iP5IFxh9k67qWHzoCOTUVY5sgz/exec";
-        
-        // LINK DE MERCADO PAGO DEFINITIVO
         const MP_LINK = "https://mpago.la/2vP93pL"; 
-        
         const WA_LINK_BANK = "https://wa.me/5491122558962?text=%C2%A1Hola%21%20Acabo%20de%20completar%20mi%20historia%20cl%C3%ADnica%20de%20Admisi%C3%B3n%20Atenci%C3%B3n%20Exclusiva%20y%20realizar%20la%20transferencia%20bancaria.%20Adjunto%20aqu%C3%AD%20el%20comprobante.";
 
         let selectedMethod = 'mp';
@@ -527,14 +598,14 @@
 
         function processFlow() {
             const form = document.getElementById('hcForm');
-            if (!iti.isValidNumber()) { alert("Teléfono inválido o incompleto."); phoneInput.focus(); return; }
+            if (!iti.isValidNumber()) { alert("El número de teléfono no es válido o está incompleto."); phoneInput.focus(); return; }
             document.getElementById("hidden_phone").value = iti.getNumber();
 
-            if(!form.checkValidity()) { alert("Complete todos los campos de la historia clínica y firme el documento."); form.reportValidity(); return; }
+            if(!form.checkValidity()) { alert("Por favor, complete todos los campos requeridos y acepte el cuadro de firma digital."); form.reportValidity(); return; }
 
             const targetUrl = (selectedMethod === 'mp') ? MP_LINK : WA_LINK_BANK;
             
-            // Configurar enlace de respaldo
+            // Configuración dinámica del enlace de contingencia
             document.getElementById('fallbackLink').href = targetUrl;
             if(selectedMethod === 'mp') {
                 document.getElementById('fallbackLink').className = "btn-submit-flow bg-mp-btn";
@@ -544,10 +615,9 @@
                 document.getElementById('fallbackLink').innerText = "Abrir WhatsApp de Comprobantes";
             }
 
-            // 1. Abrimos la pasarela INMEDIATAMENTE en el clic para evitar bloqueo Pop-Up
+            // Abre la nueva pestaña inmediatamente para evitar el bloqueo del navegador
             const paymentWindow = window.open(targetUrl, '_blank');
 
-            // 2. Enviamos la información en segundo plano a Google Apps Script
             const formData = new FormData(form);
             const params = new URLSearchParams(formData).toString();
 
@@ -563,7 +633,6 @@
                 showSuccess();
             });
 
-            // Si el navegador bloqueó la nueva pestaña, forzamos la redirección directa en la pestaña actual
             if (!paymentWindow || paymentWindow.closed || typeof paymentWindow.closed == 'undefined') {
                 window.location.href = targetUrl;
             }
